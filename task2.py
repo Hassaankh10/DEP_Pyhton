@@ -7,11 +7,16 @@ context = ssl.create_default_context()
 context.check_hostname = False
 context.verify_mode = ssl.CERT_NONE
 url = input("Enter the url: ")
-uh = urlopen(url ,context=context)
+try:
+    uh = urlopen(url ,context=context)
+except:
+    print("Invalid url")
+    exit()
 data = uh.read().decode()
 data = BeautifulSoup(data, "html.parser")
 # print(data.title)
 csv_file.write("Links\n")
+# csv_file.setwidth(100)
 links = data.find_all("a")
 for link in links:
     link = link.get("href").encode()
